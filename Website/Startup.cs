@@ -36,6 +36,7 @@ namespace Website
             new Services.Installer().Install(services);
             new Repositories.Installer().Install(services);
             new Installer().Install(services, configuration, env);
+            services.AddApplicationInsightsTelemetry(configuration["APPINSIGHTS_CONNECTIONSTRING"]);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -47,10 +48,10 @@ namespace Website
             else
             {
                 app.UseExceptionHandler("/Error");
-                app.UseHsts();
+                //app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
             if (!env.IsDevelopment())

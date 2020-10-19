@@ -6,6 +6,7 @@ import { LoginResponce, LoginResult } from '../../models/login-responce.model';
 import { LoginRequest } from '../../models/login-request.model';
 import { Group } from '../../models/group.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 
 @Component({
   selector: 'login-component',
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
   public Groups: Group[];
 
   constructor(
+    private applicationInsights: ApplicationInsights,
     private loginService: LoginService,
     private formBuilder: FormBuilder) {
 
@@ -91,7 +93,7 @@ export class LoginComponent implements OnInit {
           } else if (data.item1 == LoginResult.OK) {
             this.LoginResponce = data;
             this.LoginEvent.emit(data.item1 == LoginResult.OK);
-            //appInsights.setAuthenticatedUserContext(data.item2.Id);
+            this.applicationInsights.setAuthenticatedUserContext(data.item2.lastName);
           } else {
             this.ResultLogin = 'Ошибка';
           }
@@ -110,7 +112,7 @@ export class LoginComponent implements OnInit {
   logout() {
     this.loginService.Logout().pipe(
       map(data => {
-        //appInsights.clearAuthenticatedUserContext();
+        this.applicationInsights.clearAuthenticatedUserContext();
         window.location.assign('/');
       })
     ).subscribe();

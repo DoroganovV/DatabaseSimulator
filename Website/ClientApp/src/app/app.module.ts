@@ -37,10 +37,32 @@ import { LoadingIcons } from './shared/components/loadingIcons/loadingIcons';
 
 import { SimulatorHomeComponent } from './simulator/components/home/simulator-home.component';
 import { LoginComponent } from './shared/components/login/login.component';
+import { ApplicationInsights, DistributedTracingModes } from '@microsoft/applicationinsights-web';
+import { environment } from '../environments/environment';
 
 const appRoutes: Routes = [
   { path: '', component: SimulatorHomeComponent },
 ];
+
+const applicationInsightsFactory = () => {
+  let applicationInsights = window['applicationInsightsLogger'] as ApplicationInsights;
+
+  if (!applicationInsights) {
+    applicationInsights = window['applicationInsightsLogger'] = new ApplicationInsights({
+      config: {
+        instrumentationKey: environment.instrumentationKey,
+        enableCorsCorrelation: true,
+        enableAutoRouteTracking: true,
+        distributedTracingMode: DistributedTracingModes.W3C,
+        enableRequestHeaderTracking: true,
+        enableResponseHeaderTracking: true,
+        endpointUrl: environment.IngestionEndpoint
+      }
+    });
+  }
+
+  return applicationInsights;
+};
 
 @NgModule({
   declarations: [
@@ -67,7 +89,11 @@ const appRoutes: Routes = [
     MatCheckboxModule, MatDialogModule, MatExpansionModule, MatButtonModule, MatProgressSpinnerModule, MatSidenavModule, MatTableModule, MatPaginatorModule, MatChipsModule,
     MatStepperModule, MatMenuModule, MatFormFieldModule
   ],
-  providers: [SimulatorService, LoginService],
+  providers: [
+    SimulatorService,
+    LoginService,
+    { provide: ApplicationInsights, useFactory: applicationInsightsFactory }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

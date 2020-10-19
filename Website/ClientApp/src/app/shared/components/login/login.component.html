@@ -14,6 +14,7 @@
             <select formControlName="GroupControl" placeholder="Группа" [disabled]="!Groups">
               <option *ngFor="let group of Groups" [value]="group.id">{{group.name}}</option>
             </select>
+            <loadingIcons-component [IsLoading]="!Groups"></loadingIcons-component>
           </div>
 
           <div>

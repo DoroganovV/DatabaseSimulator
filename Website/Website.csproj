@@ -11,9 +11,11 @@
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <UserSecretsId>3e0649c3-dfb1-4f3b-aa3a-6f840996351b</UserSecretsId>
+    <ApplicationInsightsResourceId>/subscriptions/1df716fd-083c-4f04-83cc-0933137245a0/resourceGroups/Test/providers/microsoft.insights/components/DatabaseSimulator</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />

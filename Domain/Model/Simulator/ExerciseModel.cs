@@ -1,6 +1,6 @@
 ﻿using Domain.Sql;
 
-namespace Domain.Model
+namespace Domain.Model.Simulator
 {
     public class ExerciseModel : Base
     {

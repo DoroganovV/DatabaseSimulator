@@ -1,0 +1,117 @@
+<!--<login-component (LoginEvent)="IsLogin=$event"></login-component>-->
+<form [formGroup]="SimulatorReportForm">
+  <div>
+    <span>
+      <label>База данных: </label>
+      <select *ngIf="Databases" formControlName="DatabaseControl">
+        <option *ngFor="let database of Databases" [value]="database.id">{{database.name}}</option>
+      </select>
+      <loadingIcons-component [IsLoading]="!Databases"></loadingIcons-component>
+    </span>
+
+    <span *ngIf="SelectedDatabase">
+      <label>Группа: </label>
+      <select *ngIf="Groups" formControlName="GroupControl">
+        <option *ngFor="let group of Groups" [value]="group.id">{{group.name}}</option>
+      </select>
+      <loadingIcons-component [IsLoading]="!Groups && Databases"></loadingIcons-component>
+    </span>
+  </div>
+
+
+  <loadingIcons-component [IsLoading]="SelectedDatabase && Groups && !Persons"></loadingIcons-component>
+  <div *ngIf="Persons">
+    <label>Испытуемый: </label>
+    <select formControlName="PersonControl">
+      <option *ngFor="let person of Persons" [value]="person.id">{{person.lastName}}</option>
+    </select>
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Фамилия</th>
+          <th>Имя</th>
+          <th>Отчество</th>
+          <th>Выполнено</th>
+          <th>Последний вход</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let person of Persons">
+          <td>{{person.id}}</td>
+          <td>{{person.lastName}}</td>
+          <td>{{person.firstName}}</td>
+          <td>{{person.middleName}}</td>
+          <td>{{person.completed}}</td>
+          <td>{{person.lastLogin}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <loadingIcons-component [IsLoading]="!PersonExercises" id="2"></loadingIcons-component>
+    <div *ngIf="PersonExercises">
+      <label>Задача: </label>
+      <select formControlName="PersonExerciseControl">
+        <option *ngFor="let personExercise of PersonExercises" [value]="personExercise.id">{{personExercise.name}}</option>
+      </select>
+      <table>
+        <thead>
+          <tr>
+            <th>Сложность</th>
+            <th>Попыток</th>
+            <th>Последняя</th>
+            <th>Задание</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let personExercise of PersonExercises">
+            <td>{{personExercise.taskLevelStar}}</td>
+            <td>{{personExercise.attempts}}</td>
+            <td>{{personExercise.lastAttempt}}</td>
+            <td>{{personExercise.name}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <loadingIcons-component [IsLoading]="!PersonAnswerBases" id="3"></loadingIcons-component>
+      <div *ngIf="PersonAnswerBases">
+        <label>Ответ: </label>
+        <select formControlName="PersonAnswerControl">
+          <option *ngFor="let personAnswerBase of PersonAnswerBases" [value]="personAnswerBase.id">{{personAnswerBase.result}}</option>
+        </select>
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Результат</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let personAnswerBase of PersonAnswerBases">
+              <td>{{personAnswerBase.id}}</td>
+              <td>{{personAnswerBase.result}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <loadingIcons-component [IsLoading]="!SelectedPersonAnswer" id="4"></loadingIcons-component>
+        <div *ngIf="SelectedPersonAnswer">
+          <table>
+            <thead>
+              <tr>
+                <td>{{SelectedPersonAnswer.sqlAnswer}}</td>
+                <td>{{SelectedPersonAnswer.sqlCorrectAnswer}}</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><simulator-table-component *ngIf="!!SelectedPersonAnswer && !!SelectedPersonAnswer.sqlResult" [SqlTable]="SelectedPersonAnswer.sqlResult"></simulator-table-component></td>
+                <td><simulator-table-component *ngIf="!!SelectedPersonAnswer && !!SelectedPersonAnswer.sqlCorrectResult" [SqlTable]="SelectedPersonAnswer.sqlCorrectResult"></simulator-table-component></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

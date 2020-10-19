@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Domain.Enums;
-using Domain.Model;
+using Domain.Model.Simulator;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Login;

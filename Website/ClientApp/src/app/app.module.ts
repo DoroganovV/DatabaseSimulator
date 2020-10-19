@@ -36,12 +36,15 @@ import { TableComponent } from './shared/components/table/table.component';
 import { LoadingIcons } from './shared/components/loadingIcons/loadingIcons';
 
 import { SimulatorHomeComponent } from './simulator/components/home/simulator-home.component';
+import { SimulatorReportComponent } from './simulator/components/report/simulator-report.component';
+
 import { LoginComponent } from './shared/components/login/login.component';
 import { ApplicationInsights, DistributedTracingModes } from '@microsoft/applicationinsights-web';
 import { environment } from '../environments/environment';
 
 const appRoutes: Routes = [
   { path: '', component: SimulatorHomeComponent },
+  { path: 'report', component: SimulatorReportComponent },
 ];
 
 const applicationInsightsFactory = () => {
@@ -68,6 +71,7 @@ const applicationInsightsFactory = () => {
   declarations: [
     AppComponent,
     SimulatorHomeComponent,
+    SimulatorReportComponent,
     TableComponent,
     LoadingIcons,
     LoginComponent

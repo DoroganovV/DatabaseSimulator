@@ -6,6 +6,7 @@ import { Answer } from '../models/answer.model';
 export class SimulatorService {
 
   private urlSolution = "/api/solution";
+  private urlSolutionReport = "/api/solution-report";
 
   constructor(private http: HttpClient) {
   }
@@ -26,5 +27,21 @@ export class SimulatorService {
   }
   TryMySolution(exerciseId: number, answer: Answer) {
     return this.http.post(`${this.urlSolution}/exercise/${exerciseId}/my-solution`, answer);
+  }
+
+  GetGroupsByDataBase(dataBaseId: number) {
+    return this.http.get(`${this.urlSolutionReport}/data-bases/${dataBaseId}/groups`);
+  }
+  GetPersonsByGroup(groupId: number) {
+    return this.http.get(`${this.urlSolutionReport}/group/${groupId}/persons`);
+  }
+  GetExercisesByPerson(dataBaseId: number, personId: number) {
+    return this.http.get(`${this.urlSolutionReport}/data-bases/${dataBaseId}/exercise/${personId}`);
+  }
+  GetPersonAnswersByPerson(exerciseId: number, personId: number) {
+    return this.http.get(`${this.urlSolutionReport}/exercise/${exerciseId}/person/${personId}`);
+  }
+  GetPersonAnswer(personAnswerId: number) {
+    return this.http.get(`${this.urlSolutionReport}/person-answer/${personAnswerId}`);
   }
 }

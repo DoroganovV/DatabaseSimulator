@@ -1,4 +1,6 @@
-﻿namespace Domain.Sql
+﻿using System.Collections.Generic;
+
+namespace Domain.Sql
 {
     public class Person : Base
     {
@@ -9,5 +11,7 @@
 
         public int GroupId { get; set; }
         public Group Group { get; set; }
+
+        public virtual List<LoginHistory> LoginHistories { get; set; }
     }
 }

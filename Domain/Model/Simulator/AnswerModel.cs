@@ -1,4 +1,4 @@
-﻿namespace Domain.Model
+﻿namespace Domain.Model.Simulator
 {
     public class AnswerModel
     {

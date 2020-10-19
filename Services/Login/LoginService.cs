@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Common;
 using System.Collections.Generic;
+using Domain.Model.Simulator;
 
 namespace Services.Login
 {

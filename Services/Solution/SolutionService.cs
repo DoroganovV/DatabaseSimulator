@@ -1,4 +1,5 @@
 ﻿using Domain.Model;
+using Domain.Model.Simulator;
 using Domain.Sql;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Sql;
@@ -92,7 +93,7 @@ namespace Services.Solution
 
         private async Task<AnswerModel> ExuteSql(string answerSql, int personId, int exerciseId)
         {
-            var result = new AnswerModel() {SqlResult = new SqlResultModel() };
+            var result = new AnswerModel() { SqlResult = new SqlResultModel() };
             result.SqlAnswer = answerSql;
 
             string fixedAnswerBefore;
@@ -178,11 +179,8 @@ namespace Services.Solution
                             }
                             else
                             {
-                                if (isExistAnwer)
-                                {
-                                    personAnswer.IsCorrectAnswer = true;
-                                    await answerRepository.SaveAsync();
-                                }
+                                personAnswer.IsCorrectAnswer = true;
+                                await answerRepository.SaveAsync();
                                 result.Result = "Задача выполнена";
                                 result.IsDone = true;
                             }

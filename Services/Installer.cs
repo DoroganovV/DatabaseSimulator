@@ -10,6 +10,7 @@ namespace Services
         {
             serviceCollection.AddScoped<ILoginService, LoginService>();
             serviceCollection.AddScoped<ISolutionService, SolutionService>();
+            serviceCollection.AddScoped<ISolutionReportService, SolutionReportService>();
         }
     }
 }

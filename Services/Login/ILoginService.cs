@@ -1,5 +1,6 @@
 ﻿using Domain.Enums;
 using Domain.Model;
+using Domain.Model.Simulator;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

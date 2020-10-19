@@ -1,0 +1,43 @@
+<form [formGroup]="LoginForm">
+  <div *ngIf="!LoginResponce">
+  </div>
+  <div *ngIf="LoginResponce">
+    <div class="sign-in-modal" *ngIf="!IsLogin">
+      <div class="sign-in-modal-block">
+        <h2>Войти на сайт</h2>
+        <div class="form--group">
+          <div class="status-login">
+            <p>{{ResultLogin}}</p>
+          </div>
+
+          <div>
+            <select formControlName="GroupControl" placeholder="Группа" [disabled]="!Groups">
+              <option *ngFor="let group of Groups" [value]="group.id">{{group.name}}</option>
+            </select>
+          </div>
+
+          <div>
+            <input type="text" formControlName="FirstNameControl" placeholder="Имя">
+          </div>
+
+          <div>
+            <input type="text" formControlName="LastNameControl" placeholder="Фамилия">
+          </div>
+
+          <div>
+            <input type="password" formControlName="PasswordControl" placeholder="Пароль">
+          </div>
+
+          <button (click)="login()">
+            <span>Войти на сайт</span>
+            <loadingIcons-component [IsLoading]="IsLoading"></loadingIcons-component>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="logout-button" *ngIf="IsLogin">
+      <a (click)="logout()"><span>Выход</span></a>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,14 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th *ngFor="let column of Columns">{{column}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of Table">
+      <td *ngFor="let cell of row">
+        {{cell}}
+      </td>
+    </tr>
+  </tbody>
+</table>

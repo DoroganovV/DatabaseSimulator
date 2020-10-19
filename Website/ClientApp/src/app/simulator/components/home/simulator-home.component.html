@@ -1,0 +1,89 @@
+<login-component (LoginEvent)="IsLogin=$event"></login-component>
+<form [formGroup]="SimulatorHomeForm" *ngIf="IsLogin">
+  <!--<mat-form-field>
+    <mat-select placeholder="Database" formControlName="DatabaseControl">
+      <mat-option *ngFor="let database of Databases" [value]="database.id">
+        {{database.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="SelectedDatabase">
+    <mat-select *ngIf="Exercises" placeholder="Database" formControlName="ExerciseControl">
+      <mat-option *ngFor="let exercise of Exercises" [value]="exercise.id">
+        {{exercise.name}} ({{exercise.taskLevel}})
+      </mat-option>
+    </mat-select>
+  </mat-form-field>-->
+
+  <div>
+    <span>
+      <label>База данных: </label>
+      <select *ngIf="Databases" formControlName="DatabaseControl">
+        <option *ngFor="let database of Databases" [value]="database.id">{{database.name}}</option>
+      </select>
+      <loadingIcons-component [IsLoading]="!Databases"></loadingIcons-component>
+    </span>
+
+    <span *ngIf="SelectedDatabase">
+      <label>Задача: </label>
+      <select *ngIf="Exercises" formControlName="ExerciseControl">
+        <option *ngFor="let exercise of Exercises" [value]="exercise.id">{{exercise.name}} {{exercise.taskLevelStar}}</option>
+      </select>
+      <loadingIcons-component [IsLoading]="!Exercises && Databases"></loadingIcons-component>
+    </span>
+
+    <span *ngIf="!!MyAnswer">
+      {{MyAnswer.result}}
+    </span>
+  </div>
+
+  <table *ngIf="SelectedDatabase">
+    <tbody>
+      <tr>
+        <th width="50%">
+          <div *ngIf="SelectedExercise">
+            {{SelectedExercise.taskLevelStar}} Задача: <br />
+            {{SelectedExercise.text}}
+          </div>
+        </th>
+        <th width="50%">
+          Схема
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <div style="height: 374px;">
+            <textarea formControlName="TextSqlControl" style="width:100%;height: 350px;"></textarea>
+            <br />
+            <input type="button" value="Выполнить" (click)="ExuteSql()" [disabled]="!SelectedExercise" style="width:100%;" />
+          </div>
+        </td>
+        <td>
+          <!--<a href="/api/solution/scheme/{{SelectedDatabase.id}}" target="_blank">
+            <img src="/api/solution/scheme/{{SelectedDatabase.id}}" style="max-height: 350px; max-width: 100%;" alt="Открыть базу данных в новой вкладке" />
+          </a>-->
+          <div class="img-scheme">
+            <img src="/api/solution/scheme/{{SelectedDatabase.id}}" alt="Открыть базу данных в новой вкладке" [class.open]="SchemeWin" (click)="ChangeModeScheme()" />
+          </div>
+        </td>
+      </tr>
+      <tr *ngIf="!!SelectedExercise">
+        <th>
+          Результат
+        </th>
+        <th>
+          Правильный результат
+        </th>
+      </tr>
+      <tr *ngIf="!!SelectedExercise">
+        <td>
+          <simulator-table-component *ngIf="!!MyAnswer && !!MyAnswer.sqlResult" [SqlTable]="MyAnswer.sqlResult"></simulator-table-component>
+        </td>
+        <td>
+          <simulator-table-component *ngIf="!!CorrectAnswer && !!CorrectAnswer.sqlResult" [SqlTable]="CorrectAnswer.sqlResult"></simulator-table-component>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
